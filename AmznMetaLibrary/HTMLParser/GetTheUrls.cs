@@ -16,7 +16,7 @@ namespace AmznMetaLibrary.HTMLParser
 
             //var pageModel = GetLinkParts.NewPageLinkModel(url);
 
-            List<PageLinkModel> models = new List<PageLinkModel>();
+            List<PageLinkModel> models = new List<PageLinkModel>(Convert.ToInt32(Comments));
 
             for (int i = 1; i <= Comments; i++)
             {

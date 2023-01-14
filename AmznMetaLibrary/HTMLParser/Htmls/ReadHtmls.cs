@@ -9,7 +9,13 @@ namespace AmznMetaLibrary.HTMLParser.Htmls
 {
     public class Htmls
     {
-        public static async Task<List<ReviewModel>> asynchtml(List<PageLinkModel> htmls, IProgress<string> progress)
+        private readonly IReadHtmlTextParallel read;
+
+        public Htmls(IReadHtmlTextParallel read)
+        {
+            this.read = read;
+        }
+        public async Task<List<ReviewModel>> asynchtml(List<PageLinkModel> htmls)
         {
             //Returns ReviewModels
 
@@ -19,8 +25,7 @@ namespace AmznMetaLibrary.HTMLParser.Htmls
 
             foreach (var html in htmls)
             {
-                tasks.Add(Task.Run(async () => await ReadHtmlTextParallel.getHtml2(html.LinkForth)));
-                progress.Report($"Collecting Data");
+                tasks.Add(Task.Run(async () => await read.getHtml2(html.LinkForth)));
             }
 
             var result = await Task.WhenAll(tasks);

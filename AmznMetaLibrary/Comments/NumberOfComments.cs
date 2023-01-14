@@ -1,12 +1,20 @@
 ﻿using AmznMetaLibrary.HTMLParser;
+using AmznMetaLibrary.Repo;
 
 namespace AmznMetaLibrary.Comments;
 
 public class NumberOfComments
 {
-    public static async Task<List<int>> GetNumberOfComments(string url)
+    private readonly IAmznMetaRepo repo;
+
+    public NumberOfComments(IAmznMetaRepo repo)
     {
-        var asyncHtml = await GetHtml.getHtml(url);
+        this.repo = repo;
+    }
+    
+    public async Task<List<int>> GetNumberOfComments(string url)
+    {
+        var asyncHtml = await repo.getHtml(url);
 
         string[] divs = asyncHtml.Split('<');
 
@@ -18,7 +26,7 @@ public class NumberOfComments
 
         string nexturl = GetLinksFunctions.link(reviewlinkfoot);
 
-        var nextUrlAsync = await GetHtml.getHtml(nexturl);
+        var nextUrlAsync = await repo.getHtml(nexturl);
 
         string[] div = nextUrlAsync.Split('\n');
 
