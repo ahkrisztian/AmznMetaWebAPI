@@ -8,8 +8,8 @@ namespace AmznMetaLibrary.Models
 {
     public class TreatmentModel
     {
-        public int GoodTreatments { get; set; }
+        public List<ReviewModel> GoodTreatments { get; set; }
 
-        public int BadTreatments { get; set; }
+        public List<ReviewModel> BadTreatments { get; set; }
     }
 }

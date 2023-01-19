@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmznMetaLibrary", "AmznMetaLibrary\AmznMetaLibrary.csproj", "{EAF2E0F4-7062-4DCD-9027-2FDCB3808FAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmznMetaLibrary", "AmznMetaLibrary\AmznMetaLibrary.csproj", "{EAF2E0F4-7062-4DCD-9027-2FDCB3808FAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmznWebAPI", "AmznWebAPI\AmznWebAPI.csproj", "{AC7BEAB5-1C11-4FA4-8DA5-C3B4AB391573}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmznWebAPI", "AmznWebAPI\AmznWebAPI.csproj", "{AC7BEAB5-1C11-4FA4-8DA5-C3B4AB391573}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

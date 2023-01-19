@@ -6,6 +6,10 @@ using System.Text.Json.Serialization;
 using System.Reflection;
 using AmznMetaLibrary.JsonDocFilter;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
+using AmznMetaLibrary.Repo.Data;
+using System.Configuration;
+using System;
 
 namespace AmznWebAPI
 {
@@ -15,7 +19,11 @@ namespace AmznWebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddSingleton<ClientPolicies>(new ClientPolicies());
+            builder.Services.AddSingleton<ClientPolicies>(new ClientPolicies());            
+            builder.Services.AddSingleton<ISqliteDataAccess, SqliteDataAccess>();
+            builder.Services.AddSingleton<IDataRepo, SqliteDbContext>();
+
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddHttpClient<IAmznMetaRepo, AmznMetaRepo>(client =>
             {

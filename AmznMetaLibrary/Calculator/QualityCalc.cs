@@ -10,18 +10,27 @@ namespace AmznMetaLibrary.Calculator
         public QualityCalc(List<ReviewModel> models, string[] good, string[] bad) : base(models, good, bad) { }
         public override TreatmentModel Judgement()
         {
-            int goodtreatments = GoodTreatments(_good, _models);
+            List<ReviewModel> deutschreviewmodels = GermanReviews(_models);
 
-            int badtreatments = BadTreatments(_bad, _models);
 
-            return new TreatmentModel() { GoodTreatments = goodtreatments, BadTreatments = badtreatments };
+            List<ReviewModel> badtreatments = BadTreatments(_bad, deutschreviewmodels);
+
+            foreach (var badmodel in badtreatments)
+            {
+                deutschreviewmodels.Remove(badmodel);
+            }
+
+            List<ReviewModel> goodtreatments = GoodTreatments(_good, deutschreviewmodels);           
+
+            return new TreatmentModel() { GoodTreatments = goodtreatments, BadTreatments = badtreatments};
         }
 
 
-        private int GoodTreatments(string[] goodtreatments, List<ReviewModel> models)
+        private List<ReviewModel> GoodTreatments(string[] goodtreatments, List<ReviewModel> models)
         {
-            Dictionary<int, string> output = new Dictionary<int, string>();
+            //Dictionary<int, string> output = new Dictionary<int, string>();
 
+            List<ReviewModel> goodtreatmentsmodels = new List<ReviewModel>();
 
             for (int i = 0; i < goodtreatments.Length; i++)
             {
@@ -30,46 +39,69 @@ namespace AmznMetaLibrary.Calculator
 
                     if (models[j].title != null && models[j].title.ToLower().Contains(goodtreatments[i].ToLower()))
                     {
-                        output.Add(i, goodtreatments[i]);
+                        //output.Add(i, goodtreatments[i]);
+                        goodtreatmentsmodels.Add(models[j]);
+                        models.Remove(models[j]);
                         break;
                     }
 
                     if (models[j].comment != null && models[j].comment.ToLower().Contains(goodtreatments[i].ToLower()))
                     {
-                        output.Add(i, goodtreatments[i]);
+                        //output.Add(i, goodtreatments[i]);
+                        goodtreatmentsmodels.Add(models[j]);
+                        models.Remove(models[j]);
                         break;
                     }
                 }
             }
 
-            return output.Count;
+            return goodtreatmentsmodels;
         }
 
-        private int BadTreatments(string[] badgoodtreatments, List<ReviewModel> models)
+        private List<ReviewModel> BadTreatments(string[] badtreatments, List<ReviewModel> models)
         {
-            Dictionary<int, string> output = new Dictionary<int, string>();
+            //Dictionary<int, string> output = new Dictionary<int, string>();
 
+            List<ReviewModel> badtreatmentsmodels = new List<ReviewModel>();
 
-            for (int i = 0; i < badgoodtreatments.Length; i++)
+            for (int i = 0; i < badtreatments.Length; i++)
             {
                 for (int j = 0; j < models.Count; j++)
                 {
 
-                    if (models[j].title != null && models[j].title.ToLower().Contains(badgoodtreatments[i].ToLower()))
+                    if (models[j].title != null && models[j].title.ToLower().Contains(badtreatments[i].ToLower()))
                     {
-                        output.Add(j, badgoodtreatments[i]);
+                        //output.Add(j, badgoodtreatments[i]);
+                        badtreatmentsmodels.Add(models[j]);
                         break;
                     }
 
-                    if (models[j].comment != null && models[j].comment.ToLower().Contains(badgoodtreatments[i].ToLower()))
+                    if (models[j].comment != null && models[j].comment.ToLower().Contains(badtreatments[i].ToLower()))
                     {
-                        output.Add(i, badgoodtreatments[i]);
+                        //output.Add(i, badgoodtreatments[i]);
+                        badtreatmentsmodels.Add(models[j]);
                         break;
                     }
                 }
             }
 
-            return output.Count;
+            return badtreatmentsmodels;
+        }
+
+        private List<ReviewModel> GermanReviews(List<ReviewModel> models)
+        {
+            List<ReviewModel> output = new List<ReviewModel>();
+
+            foreach (var model in models)
+            {
+                if (model.date.ToLower().Contains("deutschland"))
+                {
+
+                    output.Add(model);
+                }
+            }
+
+            return output;
         }
 
     }
